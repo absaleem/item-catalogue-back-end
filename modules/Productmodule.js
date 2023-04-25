@@ -22,11 +22,10 @@ module.exports.createProduct=async(req,res,next)=>{
 };
 module.exports.createProductprice=async(req,res,next)=>{
   try{
-    let product_price_details = req.body.product_details; 
-    let product_id=product_price_details.product_id;
-    req.body.product_details.product_id=ObjectId(product_id);
+    req.body.product_details.product_id=ObjectId(product_price_details.product_id);
+    let product_details1={...req.body.product_details};
    
-  responseInserted = await mongo.selectedDB.collection("product_price").insertOne(...req.body.product_details);
+  responseInserted = await mongo.selectedDB.collection("product_price").insertOne(product_details1);
   res.send({"msg":'Price details created successfully'});
   }catch(error){
   res.status(500).send(error);
