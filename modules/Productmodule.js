@@ -22,7 +22,10 @@ module.exports.createProduct=async(req,res,next)=>{
 };
 module.exports.createProductprice=async(req,res,next)=>{
   try{
-  responseInserted = await mongo.selectedDB.collection("product_price").insertOne(req.body.product_details);
+    req.body.product_details.product_id= new ObjectId(product_price_details.product_id);
+    let product_details1={...req.body.product_details};
+   
+  responseInserted = await mongo.selectedDB.collection("product_price").insertOne(product_details1);
   res.send({"msg":'Price details created successfully'});
   }catch(error){
   res.status(500).send(error);
@@ -198,7 +201,7 @@ module.exports.getProductdetail= async(req,res,next)=>{
 };
 
 module.exports.getBrandproducts=async(req,res,next)=>{
-    const id=req.params.id; var resultSet = [];
+    const id=req.params.id; //var resultSet = [];
     try{
         listBrandproducts = await mongo.selectedDB.collection("product").aggregate([
             {$match: { "brand_id": id }}, 
@@ -245,9 +248,10 @@ module.exports.getBrandproducts=async(req,res,next)=>{
                         sub_cat_id:"$pricess.sub_cat_id",
                     },
                 }, 
+            
         ]).toArray();
         
-        resultSet['0']=listBrandproducts;  
+        /*resultSet['0']=listBrandproducts;  
         
           listProductreviews = await mongo.selectedDB.collection("product").aggregate([
             {$match: { "brand_id": id }}, 
@@ -281,9 +285,9 @@ module.exports.getBrandproducts=async(req,res,next)=>{
         ]).toArray();
         
         resultSet['1']=listProductreviews;  
+        */
         
-        
-        res.send(resultSet);
+        res.send(listBrandproducts);
         }catch(error){ 
             res.status(500).send(error);
         }
