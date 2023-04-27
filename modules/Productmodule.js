@@ -26,7 +26,7 @@ module.exports.createProductprice=async(req,res,next)=>{
     let product_details1={...req.body.product_details};
    console.log(type (req.body.product_details.product_id));
   //responseInserted = await mongo.selectedDB.collection("product_price").insertOne(product_details1);
-  res.send({"msg":'Price details created successfully'});
+ // res.send({"msg":'Price details created successfully'});
   }catch(error){
   res.status(500).send(error);
   }
