@@ -24,10 +24,10 @@ module.exports.createProductprice=async(req,res,next)=>{
   try{
     var product_id=new ObjectId(req.body.product_price_details.product_id);
 
-    var myobj = { product_id: product_id, product_image:req.body.product_price_details.product_image,
+    var myobj =  {"product_details":{ product_id: product_id, product_image:req.body.product_price_details.product_image,
                   product_price:req.body.product_price_details.product_price,
                   product_discount_price:req.body.product_price_details.product_discount_price,
-                  sub_cat_id:req.body.product_price_details.sub_cat_id };
+                  sub_cat_id:req.body.product_price_details.sub_cat_id } };
 
   responseInserted = await mongo.selectedDB.collection("product_price").insertOne(myobj);
   res.send({"msg":'Price details created successfully'});
